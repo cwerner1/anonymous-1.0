@@ -1,0 +1,20 @@
+
+<br>
+<h3>Anonymous sources</h3>
+
+<h2><?php echo $this->outlet; ?></h2>
+
+<br><br>
+
+<?php foreach($this->results as $result):  ?>
+
+    <b><a href="<?php echo str_replace('&','&amp;',$result['url']); ?>"><?php echo $result['title']; ?></a></b><br>
+    <?php echo str_replace('&','&amp;', html_entity_decode($result['summary'])); ?><br>
+    <span class="timestamp"><?php echo html_entity_decode(date("F j, Y", strtotime($result['date_published']))); ?></span>
+    <br><br><br>
+
+<?php endforeach; ?>
+
+<?php if(count($this->results) > 1): ?>
+    <?php echo $this->paginationControl($this->results, 'Sliding', 'my_pagination_control.phtml'); ?>
+<?php endif; ?>

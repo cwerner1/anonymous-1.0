@@ -1,0 +1,38 @@
+<br><h2>News outlets that publish anonymous sources</h2>
+
+<p>Click the outlet's name to see examples.</p><br>
+
+<div id="outlets">
+    
+<table cellspacing="0" cellpadding="3">
+<thead>
+    <tr>
+        <th>Name</th><th>Count</th><th>&nbsp;</th><th>&nbsp;</th>
+    </tr>
+</thead>
+<tbody>
+
+<?php foreach($this->counts as $count):  ?>
+<tr>
+    <td style="align:left;"><a href="<?php echo $this->baseUrl; ?>/anonymous/outlet/<?php echo strtolower(urlencode($count['outlet'])); ?>"><?php echo $count['outlet']; ?></a></td>
+    <td style="text-align:right;width:70px">
+        <?php echo number_format($count['count']); ?>
+    </td>
+    <td>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+    <td>
+        <div class="bars">
+            <div style="width: <?php echo number_format(ceil((100*($count['count']/$this->max)))); ?>%"></div>
+        </div>
+    </td>
+</tr>
+<?php endforeach; ?>
+</tbody>
+</table>
+<br>
+<?php if(count($this->counts) > 1): ?>
+    <?php echo $this->paginationControl($this->counts, 'Sliding', 'my_pagination_control.phtml'); ?>
+<?php endif; ?>
+
+</div> <!-- outlets -->

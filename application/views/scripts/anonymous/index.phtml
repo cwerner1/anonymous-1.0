@@ -1,0 +1,70 @@
+<br><h1 style="color: #E00000;font-size:62px;font-weight:normal;margin-bottom:0">Anonymous source tracker</h1> 
+
+<p style="padding-bottom:20px">Continuously updated examples of the media's use of anonymous sources</p><br>
+
+<div id="anon_left">
+
+<?php foreach($this->feeds as $feed):  ?>
+
+<b><a href="<?php echo str_replace('&','&amp;',$feed['url']); ?>"><?php echo $feed['outlet']; ?>&nbsp;&mdash;&nbsp;
+<?php echo trim(strip_tags(str_replace('"',"'",str_replace(' - ' . $feed['outlet'],'',$this->escape($feed['title']))))); ?></a></b><br><hr>
+    <?php echo str_replace('&','&amp;',html_entity_decode($feed['summary'])); ?>
+    <div class="timestamp"><?php echo html_entity_decode(date("F j, Y", strtotime($feed['date_published']))); ?></div>
+    <br><br><br>
+<?php endforeach; ?>
+
+<?php if(count($this->feeds) > 1): ?>
+    <?php echo $this->paginationControl($this->feeds, 'Sliding', 'my_pagination_control.phtml'); ?>
+<?php endif; ?>
+
+</div> <!-- anon_left -->
+
+<div id="anon_right">
+
+<span class="about"><?php echo number_format($this->total_count); ?> examples for <span class="underline"><a href="/anonymous/outlets"><?php echo number_format($this->outlet_count); ?> English-language news outlets</a></span> found since Feb. 10, 2010</span><br><br>
+
+<p><a href="/anonymous/outlets" title="Chart shows anonymous sources found per day for the last 60 days. Click to see a list of all outlets."><img border="0" src="http://chart.apis.google.com/chart?chs=240x60&amp;cht=ls&amp;chd=t:<?php echo $this->source_count; ?>&amp;chco=FF0000&amp;chls=1,1,0" alt="Chart of sources per day" ></a></p>
+
+<a href="#" id="about_link" class="about underline">About the tracker</a><br><br>
+
+<div id="about_text" class="about_text">
+    
+<p>The goal of the anonymous source tracker is to make the media's use of anonymous sources more transparent. It's an experiment, and as such it's imperfect and subject to change.</p>
+
+<p>While it finds many examples of the use of anonymous sources, it doesn't find all anonymous sources used by newspapers, magazines, TV stations, wire services or other news outlets online.</p>
+
+<p>It gets its examples from the English version of <a href="http://news.google.com/">Google News</a>. Phrases commonly used to identify anonymous sources are fed to Google News, which produces an <a href="http://en.wikipedia.org/wiki/Atom_(standard)">Atom feed</a> for each phrase. At regular intervals <a  href="http://schaver.com/wretch/public/examples/anonymous.php.txt">a PHP script</a> grabs the Atom feeds, extracts the summary text, highlights the anonymous source phrasing, and puts it in a database to display on the anonymous source tracker.</p>
+
+<p>Some examples are rejected, even though the articles they point to used anonymous sources, because the anonymous source phrasing isn't in the summary.</p> 
+
+<p>Some examples are duplicates. If a URL is already in the database, those examples are rejected. But sometimes the same story can have different URLs, so the same story can appear more than once. The same wire story may also be run by multiple outlets.</p>
+
+<p>The news outlets scanned are the same outlets scanned by Google News. I don't know what criteria Google News uses to decide whether to include a Web site.</p> 
+
+<p>Typically Google returns a search result for a phrase giving a summary for only one outlet, with an "and more" link pointing to other matches for stories on the same subject. The anonymous source tracker doesn't grab those "and more" results, so many examples are undoubtedly missed.</p> 
+
+<p>I don't know how Google does what it does or why, or why one outlet is given prominence for a given search while another isn't, so I don't know if all outlets are being treated equally by the anonymous source tracker.</p>
+
+<p>The count for each news outlet doesn't include every anonymously sourced story produced by that outlet. The counts shouldn't be considered valid rankings.</p>
+
+<p>To <a href="http://politicalhumor.about.com/cs/quotethis/a/rumsfeldquotes.htm">quote Donald Rumsfeld</a>, "there are known unknowns."</p>
+
+<p>"That is to say we know there are some things we do not know. But there are also unknown unknowns &mdash; the ones we don't know we don't know."</p>    
+
+</div>
+
+
+<table cellspacing="1">
+<?php foreach($this->counts as $count): ?>
+	
+<tr>
+	<td style="align:left"><b><a class="title" href="<?php echo $this->baseUrl; ?>/anonymous/outlet/<?php echo strtolower(urlencode($count['outlet'])); ?>" title="|<b>Click to see anonymous sources published by <?php echo $this->escape($count['outlet']); ?></b>"><?php echo $this->escape($count['outlet']); ?></a></b></td>
+	<td style="align:right;text-align:right"><?php echo number_format($count['outlet_count']); ?></td>
+</tr>
+
+<?php endforeach; ?>	
+</table>
+
+<p style="float:right"><a href="/anonymous/outlets">>> See all</a> </p>
+
+</div> <!-- anon right -->
