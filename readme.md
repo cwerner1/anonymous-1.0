@@ -3,4 +3,6 @@
 Anonymous source tracker
 ========================
 
-Code for the anonymous source tracker formerly found at http://schaver.com/anonymous.
+Old code for the anonymous source tracker at http://schaver.com/anonymous.
+
+Check out the code for [the newer version](https://github.com/markschaver/anonymous).
